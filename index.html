@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Cotización | Marco Sánchez - Bienes Raíces</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #eef2f5;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            padding: 2rem 1rem;
+            color: #1a2c3e;
+        }
+
+        .cotizacion {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.2);
+            overflow-x: auto;
+        }
+
+        .header {
+            background: #0f2b3d;
+            padding: 2rem;
+            color: white;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1.5rem;
+            min-width: 600px;
+        }
+        .titulo h1 { font-size: 2rem; margin-bottom: 0.25rem; }
+        .titulo p { color: #bdd4e4; font-size: 0.85rem; }
+        .documento h2 {
+            background: #1e4a6e;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 1.3rem;
+            display: inline-block;
+        }
+        .documento p { text-align: right; margin-top: 0.5rem; font-size: 0.8rem; color: #cbdbe0; }
+
+        .cliente {
+            background: #f8fafc;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1rem;
+            min-width: 600px;
+        }
+        .cliente h3 { font-size: 0.7rem; text-transform: uppercase; color: #4a627a; margin-bottom: 0.3rem; }
+        .cliente p { font-weight: 500; }
+
+        .tabla-desarrollo { padding: 2rem; min-width: 700px; }
+        .tabla-desarrollo table { width: 100%; border-collapse: collapse; }
+        .tabla-desarrollo th { text-align: left; padding: 0.75rem 0.5rem; border-bottom: 2px solid #e2e8f0; color: #1f4a6e; }
+        .tabla-desarrollo td { padding: 0.9rem 0.5rem; border-bottom: 1px solid #edf2f7; vertical-align: top; }
+        .tabla-desarrollo td:last-child, .tabla-desarrollo th:last-child { text-align: right; }
+        .concepto-desc { font-size: 0.8rem; color: #5a6e85; display: block; margin-top: 0.2rem; }
+
+        .precios { padding: 0 2rem 2rem 2rem; display: flex; flex-wrap: wrap; gap: 1.5rem; min-width: 600px; }
+        .card {
+            background: #f9fbfd;
+            border-radius: 24px;
+            padding: 1.2rem 1.5rem;
+            flex: 1;
+            min-width: 280px;
+            border: 1px solid #eef2f8;
+        }
+        .card h4 { border-left: 3px solid #2c7da0; padding-left: 0.7rem; margin-bottom: 1rem; }
+        .linea-precio { display: flex; justify-content: space-between; margin-bottom: 0.6rem; font-size: 0.9rem; }
+        .linea-total { font-weight: 800; font-size: 1.2rem; border-top: 1px solid #dce5ef; margin-top: 0.6rem; padding-top: 0.6rem; }
+        .descuento { color: #2c6e2c; font-weight: 600; }
+
+        /* Tabla de combinaciones Hostinger + Dominio */
+        .tabla-combinaciones {
+            margin: 0 2rem 2rem 2rem;
+            background: #fef7e0;
+            border: 1px solid #f1e2b3;
+            border-radius: 24px;
+            padding: 1.2rem 1.5rem;
+            overflow-x: auto;
+        }
+        .tabla-combinaciones h4 {
+            margin-bottom: 1rem;
+            color: #a16200;
+        }
+        .tabla-combinaciones table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+        .tabla-combinaciones th {
+            background: #f1e2b3;
+            padding: 0.6rem 0.5rem;
+            text-align: center;
+            border: 1px solid #e9d4a0;
+        }
+        .tabla-combinaciones td {
+            padding: 0.5rem;
+            text-align: center;
+            border: 1px solid #e9d4a0;
+        }
+        .tabla-combinaciones .fila-titulo {
+            background: #e9d4a0;
+            font-weight: 600;
+        }
+
+        .mantenimiento {
+            margin: 0 2rem 2rem 2rem;
+            background: #eef2fa;
+            border-radius: 24px;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+        .precio-mant { font-size: 1.4rem; font-weight: 800; }
+
+        .pago {
+            margin: 0 2rem 2rem 2rem;
+            background: #f1f5f9;
+            border-radius: 24px;
+            padding: 1.2rem 1.5rem;
+        }
+        .botones-opciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .opcion-pago {
+            background: white;
+            border-radius: 20px;
+            padding: 0.8rem 1.2rem;
+            flex: 1;
+            min-width: 160px;
+            border: 1px solid #e2edf2;
+        }
+        .opcion-pago .precio { font-size: 1.4rem; font-weight: 800; color: #1e4663; }
+        .destacado { background: #eef9f0; border-left: 4px solid #2c7a4d; }
+
+        .notas {
+            margin: 0 2rem 1.5rem 2rem;
+            font-size: 0.8rem;
+            border-left: 3px solid #2c7da0;
+            padding-left: 1rem;
+            color: #2c4e6e;
+        }
+        .footer {
+            background: #fefefe;
+            border-top: 1px solid #e9edf2;
+            padding: 1.2rem;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #5c6f87;
+        }
+        .print-btn {
+            background: #1f5e3a;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+        @media (max-width: 700px) {
+            .header, .cliente { flex-direction: column; }
+            .documento p { text-align: left; }
+            .precios { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+<div class="cotizacion" id="cotizacion">
+    <div class="header">
+        <div class="titulo">
+            <h1>WebCraft Studio</h1>
+            <p>Desarrollo profesional · Soluciones web a medida</p>
+        </div>
+        <div class="documento">
+            <h2>COTIZACIÓN</h2>
+            <p>Nº WEB-2404-07 · 06 de abril, 2026<br>Válida por 15 días</p>
+        </div>
+    </div>
+
+    <div class="cliente">
+        <div>
+            <h3>CLIENTE</h3>
+            <p>Marco Sánchez<br>Marco Sánchez Bienes Raíces<br>Ecuador (cobertura nacional)</p>
+        </div>
+        <div>
+            <h3>PROYECTO</h3>
+            <p>Sitio web profesional + CMS autoadministrable</p>
+        </div>
+    </div>
+
+    <!-- DESGLOSE DE DESARROLLO (MANO DE OBRA) - PRECIOS REALES TAL CUAL -->
+    <div class="tabla-desarrollo">
+        <h3 style="margin-bottom: 1rem; font-size: 1.2rem;">🔧 Desarrollo y configuración (mano de obra)</h3>
+        <table>
+            <thead><tr><th>Concepto</th><th>Precio (USD)</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Diseño personalizado + maquetación responsive</strong><span class="concepto-desc">Home, paleta de colores, adaptación a celular/tablet/escritorio</span></td><td>$110</td></tr>
+                <tr><td><strong>Codificación HTML/CSS/JS optimizada</strong><span class="concepto-desc">Estructura semántica, rápida y moderna</span></td><td>$90</td></tr>
+                <tr><td><strong>Sistema de propiedades (listado + fichas individuales)</strong><span class="concepto-desc">Precio, fotos, ubicación, financiamiento, requisitos, enlace a recorridos</span></td><td>$130</td></tr>
+                <tr><td><strong>Secciones: Sobre mí + Servicios (6 áreas)</strong><span class="concepto-desc">Biografía profesional, iconografía personalizada</span></td><td>$70</td></tr>
+                <tr><td><strong>Integración de contactos y redes sociales</strong><span class="concepto-desc">2 botones WhatsApp, Facebook, TikTok, Instagram, correo profesional</span></td><td>$50</td></tr>
+                <tr><td><strong>SISTEMA DE GESTIÓN (CMS)</strong><span class="concepto-desc">Panel administrativo para que usted mismo suba/edite propiedades, fotos, servicios y textos. Conexión por API con la web.</span></td><td><strong>$170</strong></td></tr>
+                <tr><td><strong>Optimización SEO básica + local</strong><span class="concepto-desc">Meta etiquetas, estructura amigable, schema.org inmobiliario</span></td><td>$50</td></tr>
+                <tr><td><strong>Pruebas, ajustes + capacitación</strong><span class="concepto-desc">2 rondas de correcciones + manual de uso del CMS</span></td><td>$50</td></tr>
+                <tr><td><strong>Despliegue y configuración (Hostinger + dominio + conexión API)</strong><span class="concepto-desc">Configuración del dominio, despliegue de la web, conexión entre Hostinger y el CMS</span></td><td><span style="color:#2c6e2c;">Incluido</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PRECIO PREFERENCIAL -->
+    <div class="precios">
+        <div class="card">
+            <h4>💰 Mano de obra (desarrollo + CMS)</h4>
+            <div class="linea-precio"><span>Valor de mercado</span><span>$720</span></div>
+            <div class="linea-precio descuento"><span>🎁 Descuento especial por recomendación</span><span>-$370</span></div>
+            <div class="linea-precio linea-total"><span>PRECIO PREFERENCIAL</span><span><strong>$350 USD</strong></span></div>
+            <div style="margin-top:0.8rem; font-size:0.75rem;">▶ Pago único: $350<br>▶ Dos cuotas: $175 + $175</div>
+        </div>
+    </div>
+
+    <!-- TABLA DE COMBINACIONES: HOSTING + DOMINIO (TODAS LAS SUMAS) -->
+    <div class="tabla-combinaciones">
+        <h4>🌐 Infraestructura: combinaciones de Hostinger + Dominio (pago directo del cliente)</h4>
+        <table>
+            <thead>
+                <tr class="fila-titulo">
+                    <th>Hostinger \ Dominio</th>
+                    <th>1 año ($12)</th>
+                    <th>2 años ($24)</th>
+                    <th>3 años ($36)</th>
+                    <th>4 años ($48)</th>
+                    <th>5 años ($60)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="fila-titulo">48 meses ($383.52)</td><td>$395.52</td><td>$407.52</td><td>$419.52</td><td>$431.52</td><td>$443.52</td></tr>
+                <tr><td class="fila-titulo">24 meses ($215.76)</td><td>$227.76</td><td>$239.76</td><td>$251.76</td><td>$263.76</td><td>$275.76</td></tr>
+                <tr><td class="fila-titulo">12 meses ($119.88)</td><td>$131.88</td><td>$143.88</td><td>$155.88</td><td>$167.88</td><td>$179.88</td></tr>
+                <tr><td class="fila-titulo">1 mes ($27.99)</td><td>$39.99</td><td>$51.99</td><td>$63.99</td><td>$75.99</td><td>$87.99</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:0.7rem; margin-top: 1rem;">✅ Usted elige la combinación que prefiera. Los precios del dominio son estimados en $12/año (Cloudflare, sin inflación). Paga una sola vez por los años que elija.</p>
+    </div>
+
+    <!-- INSFORGE Y MANTENIMIENTO -->
+    <div class="tabla-combinaciones" style="background:#eef2fa; border-color:#cde0ec;">
+        <h4>🗄️ Insforge (backend / base de datos)</h4>
+        <p><strong>Plan Pro: $25/mes</strong> (pago mensual directo del cliente a Insforge)</p>
+        <p style="font-size:0.8rem; margin-top:0.5rem;">✅ Solo se paga cuando el sistema esté listo para desplegarse. Durante el desarrollo no hay costo.</p>
+    </div>
+
+    <!-- MANTENIMIENTO BIMESTRAL -->
+    <div class="mantenimiento">
+        <div>
+            <h4>🔄 Mantenimiento bimestral (soporte y actualizaciones)</h4>
+            <p style="font-size:0.8rem;">Incluye: supervisión técnica, respaldos manuales, pequeños cambios de contenido, resolución de incidencias. No incluye costos de plataformas (Hostinger, dominio, Insforge), que usted paga directamente.</p>
+        </div>
+        <div style="text-align: right;">
+            <div class="precio-mant">$60 USD</div>
+            <span style="font-size:0.7rem;">cada dos meses</span>
+        </div>
+    </div>
+
+    <!-- OPCIONES DE PAGO -->
+    <div class="pago">
+        <h4>✔️ Formas de pago (solo mano de obra)</h4>
+        <div class="botones-opciones">
+            <div class="opcion-pago destacado">
+                <div class="precio">$350</div>
+                <div><strong>Pago único</strong><br><small>Precio preferencial</small></div>
+            </div>
+            <div class="opcion-pago">
+                <div class="precio">$175 + $175</div>
+                <div><strong>Dos cuotas</strong><br><small>50% al inicio · 50% al entregar</small></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTAS IMPORTANTES -->
+    <div class="notas">
+        <p><strong>📌 Notas importantes:</strong></p>
+        <p>✔ Usted debe crear las cuentas en Hostinger, Cloudflare e Insforge. Una vez creadas, me invita como colaborador a su correo para que yo realice la configuración técnica, todo 100% remoto.<br>
+        ✔ Los videos se alojan en YouTube (gratuito) y se enlazan desde el CMS.<br>
+        ✔ El CMS le permite actualizar fotos, textos, servicios y propiedades sin conocimientos técnicos.<br>
+        ✔ Tiempo estimado de desarrollo: 15 a 20 días hábiles desde la recepción del anticipo.<br>
+        ✔ El precio de desarrollo no incluye la creación de contenido (fotos, textos, logos).<br>
+        ✔ Para la página web de la empresa de capacitación (segundo proyecto) se emitirá una cotización independiente.</p>
+    </div>
+
+    <div class="footer">
+        <p>WebCraft Studio · contacto@webcraftstudio.com</p>
+        <button class="print-btn" onclick="window.print();">🖨️ Imprimir / Guardar PDF</button>
+    </div>
+</div>
+</body>
+</html>
